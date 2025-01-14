@@ -15,7 +15,7 @@ Welcome to the **Stock Price Checker**!
 You can search for any stock ticker symbols (e.g., AAPL, TSLA) separated by commas, and view detailed analytics including stock price, **Simple Moving Average (SMA)**, **Exponential Moving Average (EMA)**, **Relative Strength Index (RSI)**, and **MACD** for your selected date range.
 """)
 
-# Create a user input section for stock ticker symbols
+# Create a user input section for stock ticker 
 watchlist = st.text_input("Enter Stock Ticker Symbols (comma-separated, e.g., AAPL, TSLA)").upper()
 
 # Create date input section for selecting the range of historical data
