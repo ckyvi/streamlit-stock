@@ -32,6 +32,30 @@ macd_short_window = 12
 macd_long_window = 26
 macd_signal_window = 9
 
+# Initialize watchlist in session state if not already present
+if "watchlist" not in st.session_state:
+    st.session_state.watchlist = []
+
+# Add stock symbol to watchlist
+if st.button("Add to Watchlist"):
+    if stock_symbol not in st.session_state.watchlist:
+        st.session_state.watchlist.append(stock_symbol)
+        st.success(f"{stock_symbol} has been added to your watchlist.")
+    else:
+        st.warning(f"{stock_symbol} is already in your watchlist.")
+
+# Display the current watchlist
+st.subheader("Your Watchlist")
+if st.session_state.watchlist:
+    st.write(", ".join(st.session_state.watchlist))
+else:
+    st.write("Your watchlist is empty.")
+
+# Show button to clear the watchlist
+if st.button("Clear Watchlist"):
+    st.session_state.watchlist = []
+    st.success("Your watchlist has been cleared.")
+
 # Add a "Submit" button for fetching the data
 if st.button("Fetch Stock Data"):
     if stock_symbol:
