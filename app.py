@@ -115,16 +115,19 @@ sorted_watchlist = sort_watchlist()
 for symbol in sorted_watchlist:
     stock_data = yf.Ticker(symbol)
     info = stock_data.info
-    current_price = info['regularMarketPrice']
-    market_cap = info['marketCap']
-    pe_ratio = info.get('trailingPE', 'N/A')  # Some stocks may not have PE ratio data
+    # Get the current price safely using `.get()`, which returns None if the key doesn't exist
+    current_price = info.get('regularMarketPrice', 'N/A')  # Default to 'N/A' if the key doesn't exist
+    market_cap = info.get('marketCap', 'N/A')  # Similarly for market cap
+    pe_ratio = info.get('trailingPE', 'N/A')  # And for PE ratio
     
-    st.write(f"### {symbol} - Current Price: ${current_price:.2f}")
-    st.write(f"**Market Cap**: ${market_cap:,}")
+    # Display the information
+    st.write(f"### {symbol} - Current Price: ${current_price}")
+    st.write(f"**Market Cap**: {market_cap}")
     st.write(f"**PE Ratio**: {pe_ratio}")
     
     # Check if the price crosses the alert threshold
-    check_price_alert(symbol, current_price, alert_threshold)
+    check_price_alert(symbol, current_price if current_price != 'N/A' else 0, alert_threshold)
+
 
 # Remove stock from watchlist
 remove_symbol = st.selectbox("Select a stock to remove", st.session_state.watchlist)
