@@ -12,20 +12,20 @@ st.title("📈 Stock Price Checker")
 # Header and Introduction
 st.markdown("""
 Welcome to the **Stock Price Checker**! 
-You can input any stock ticker symbols (e.g., AAPL, TSLA) separated by commas, and view detailed analytics including stock price, **Simple Moving Average (SMA)**, **Exponential Moving Average (EMA)**, **Relative Strength Index (RSI)**, and **MACD** for your selected date range.
+You can search for any stock ticker symbols (e.g., AAPL, TSLA) separated by commas, and view detailed analytics including stock price, **Simple Moving Average (SMA)**, **Exponential Moving Average (EMA)**, **Relative Strength Index (RSI)**, and **MACD** for your selected date range.
 """)
 
 # Create a user input section for stock ticker symbols
 watchlist = st.text_input("Enter Stock Ticker Symbols (comma-separated, e.g., AAPL, TSLA)").upper()
 
 # Create date input section for selecting the range of historical data
-start_date = st.date_input("Start Date", value=datetime.date(2020, 1, 1))
+start_date = st.date_input("Start Date", value=datetime.date(2025, 1, 1))
 end_date = st.date_input("End Date", value=datetime.date.today())
 
 # Create input for SMA, EMA, RSI, and MACD windows
-sma_window = st.number_input("Enter SMA Window", min_value=1, value=14)
-ema_window = st.number_input("Enter EMA Window", min_value=1, value=14)
-rsi_window = st.number_input("Enter RSI Window", min_value=1, value=14)
+sma_window = st.number_input("Enter SMA Window", min_value=1, value=5)
+ema_window = st.number_input("Enter EMA Window", min_value=1, value=5)
+rsi_window = st.number_input("Enter RSI Window", min_value=1, value=5)
 
 # Set MACD window values to their defaults
 macd_short_window = 12
@@ -39,7 +39,6 @@ if watchlist:
 
     # Add a "Submit" button for fetching the data
     if st.button("Fetch Watchlist Data"):
-        st.write("Button clicked!")  # Check if the button is being clicked
         for stock_symbol in stocks:
             try:
                 # Fetch stock data using yfinance
@@ -76,7 +75,7 @@ if watchlist:
                     macd_signal = macd.ewm(span=macd_signal_window, adjust=False).mean()
                     macd_histogram = macd - macd_signal
 
-                    # Plot the data with better aesthetics
+                    # Plot the data 
                     plt.style.use('ggplot')
 
                     # Create subplots
